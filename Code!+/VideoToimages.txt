@@ -1,0 +1,39 @@
+import cv2
+import os
+
+# Read the video from specified path
+cam = cv2.VideoCapture(r'C:\videos\obj01.mp4')
+
+try:
+	# creating a folder named data
+	if not os.path.exists('video-frames'):
+		os.makedirs('video-frames')
+
+	# if not created then raise error
+except OSError:
+	print('Error: Creating directory of data')
+
+# frame
+currentframe = 0
+
+while (True):
+
+	# reading from frame
+	ret, frame = cam.read()
+
+	if ret:
+		# if video remains continue creating images
+		name = './video-frames/frame' + str(currentframe) + '.jpg'
+		print('Creating...' + name)
+
+		# write extracted images
+		cv2.imwrite(name, frame)
+
+		# Counter to show number of frames that are being created
+		currentframe += 1
+	else:
+		break
+
+# Release all space and windows once done
+cam.release()
+cv2.destroyAllWindows()
